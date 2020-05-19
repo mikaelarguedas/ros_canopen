@@ -5,7 +5,9 @@ namespace canopen
 {
 
 State402::InternalState State402::getState(){
+    ROSCANOPEN_INFO("canopen_402", "getState: Before lock: ");
     boost::mutex::scoped_lock lock(mutex_);
+    ROSCANOPEN_INFO("canopen_402", "getState: After lock: ");
     return state_;
 }
 
