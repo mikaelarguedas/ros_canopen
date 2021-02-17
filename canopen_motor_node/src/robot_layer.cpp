@@ -236,7 +236,7 @@ void RobotLayer::doSwitch(const std::list<hardware_interface::ControllerInfo> &s
             }
 
         }catch(const std::out_of_range&){
-            ROS_ERROR_STREAM("Conttroller " << controller_it->name << "not found, will stop it");
+            ROS_ERROR_STREAM("Controller " << controller_it->name << "not found, will stop it");
             failed_controllers.push_back(controller_it->name);
         }
     }
