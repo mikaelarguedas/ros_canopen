@@ -144,28 +144,28 @@ void HandleLayer::handleRead(LayerStatus &status, const LayerState &current_stat
     }
 }
 void HandleLayer::handleWrite(LayerStatus &status, const LayerState &current_state) {
-    if(current_state == Ready){
-        hardware_interface::JointHandle* jh = 0;
-        if(forward_command_) jh = jh_;
+    if(current_state != Ready) return;
 
-        if(jh == &jph_){
-            motor_->setTarget(conv_target_pos_->evaluate());
-            cmd_vel_ = vel_;
-            cmd_eff_ = eff_;
-        }else if(jh == &jvh_){
-            motor_->setTarget(conv_target_vel_->evaluate());
-            cmd_pos_ = pos_;
-            cmd_eff_ = eff_;
-        }else if(jh == &jeh_){
-            motor_->setTarget(conv_target_eff_->evaluate());
-            cmd_pos_ = pos_;
-            cmd_vel_ = vel_;
-        }else{
-            cmd_pos_ = pos_;
-            cmd_vel_ = vel_;
-            cmd_eff_ = eff_;
-            if(jh) status.warn("unsupported mode active");
-        }
+    hardware_interface::JointHandle* jh = 0;
+    if(forward_command_) jh = jh_;
+
+    if(jh == &jph_){
+        motor_->setTarget(conv_target_pos_->evaluate());
+        cmd_vel_ = vel_;
+        cmd_eff_ = eff_;
+    }else if(jh == &jvh_){
+        motor_->setTarget(conv_target_vel_->evaluate());
+        cmd_pos_ = pos_;
+        cmd_eff_ = eff_;
+    }else if(jh == &jeh_){
+        motor_->setTarget(conv_target_eff_->evaluate());
+        cmd_pos_ = pos_;
+        cmd_vel_ = vel_;
+    }else{
+        cmd_pos_ = pos_;
+        cmd_vel_ = vel_;
+        cmd_eff_ = eff_;
+        if(jh) status.warn("unsupported mode active");
     }
 }
 
